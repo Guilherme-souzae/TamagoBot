@@ -1,4 +1,4 @@
-petshop = {}
+import db_manager
 
 def process_adopt(guild, content):
     parts = content.split()
@@ -6,14 +6,10 @@ def process_adopt(guild, content):
     if parts[-1].startswith("http"):
         img_link = parts[-1]
         name = " ".join(parts[:-1])
-        pet = {'name': name, 'img_link': img_link}
-        petshop[guild] = pet
+        db_manager.create_pet(guild, name, img_link)
     else:
         raise Exception
 
 def process_check(guild):
-    pet = petshop.get(guild)
-    if pet:
-        return pet['name']
-    else:
-        return None
+    pet_name, pet_img_link = db_manager.read_pet(guild)
+    return pet_name
