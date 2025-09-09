@@ -1,6 +1,7 @@
 import os
 import discord
-import main_processing
+from src import db_manager
+from src import main_processing
 from discord.ext import commands
 from dotenv import load_dotenv
 
@@ -31,8 +32,19 @@ async def adopt(ctx, *, content: str):
 @bot.command(name="check")
 async def check(ctx):
     guild = ctx.guild
-    pet_name = main_processing.process_check(guild)
+    pet_name = db_manager.read_pet(guild)
     if pet_name:
         await ctx.send(f"{pet_name} is online")
 
-bot.run(TOKEN)
+@bot.command(name="free")
+async def delete(ctx):
+    guild = ctx.guild
+    db_manager.delete_pet(guild)
+    await ctx.send(f"Deleted")
+
+@bot.command(name="rename")
+async def rename(ctx, new_name):
+    guild = ctx.guild
+
+if __name__ == "main":
+    bot.run(TOKEN)
