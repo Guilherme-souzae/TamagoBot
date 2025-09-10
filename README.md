@@ -4,3 +4,8 @@
 <ul>
   <li>CRUD dos pets em um banco de dados json</li>
 </ul>
+
+<h3>Ferramentas de desenvolvimento</h3>
+<ul>
+   <li>Testes mock unitário de funções</li>
+</ul?

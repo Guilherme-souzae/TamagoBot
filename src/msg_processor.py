@@ -27,14 +27,14 @@ async def adopt(ctx, *, content: str):
         main_processing.process_adopt(guild, content)
         await ctx.send(f"Adopted")
     except Exception as e:
-        await ctx.send("Invalid argument")
+        error_message = f"Error: {str(e)}"
+        await ctx.send(error_message)
 
 @bot.command(name="check")
 async def check(ctx):
     guild = ctx.guild
-    pet_name = db_manager.read_pet(guild)
-    if pet_name:
-        await ctx.send(f"{pet_name} is online")
+    embed = main_processing.process_check(guild)
+    await ctx.send(embed=embed)
 
 @bot.command(name="free")
 async def delete(ctx):
@@ -46,5 +46,5 @@ async def delete(ctx):
 async def rename(ctx, new_name):
     guild = ctx.guild
 
-if __name__ == "main":
+if __name__ == "__main__":
     bot.run(TOKEN)
