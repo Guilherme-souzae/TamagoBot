@@ -1,20 +1,24 @@
 package br.inatel.cdg.tamagobot;
 
-public final class Service
+public class Service
 {
-    private Service() { throw new UnsupportedOperationException("Esta classe não pode ser instanciada."); }
+    private Repository repo;
 
-    public static Entity createEntity(String guildId, String msg)
+    public void setRepo(Repository repo)
+    {
+        this.repo = repo;
+    }
+
+    public void createEntity(String guildId, String msg)
     {
         int index = msg.indexOf("https://");
         String name = msg.substring(0, index).trim();
         String url = msg.substring(index).trim();
-
-        return new Entity(guildId, name, url);
+        repo.create(new Entity(guildId, name, url));
     }
 
-    public static Entity getEntity(String guildId)
+    public Entity getEntity(String guildId)
     {
-        return Repository.get(guildId);
+        return repo.get(guildId);
     }
 }

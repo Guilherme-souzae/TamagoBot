@@ -1,6 +1,5 @@
 package br.inatel.cdg.tamagobot;
 
-import com.sun.security.ntlm.Server;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -10,6 +9,13 @@ import java.awt.*;
 public class Controller extends ListenerAdapter
 {
     private final String prefix = "!";
+    private Service service;
+
+    // Setter para injeção de dependência
+    public void setService(Service service)
+    {
+        this.service = service;
+    }
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event)
@@ -34,15 +40,14 @@ public class Controller extends ListenerAdapter
         if (msg.startsWith(prefix + "Adopt"))
         {
             String content = msg.substring((prefix + "Adopt").length()).trim();
-            Entity entity = Service.createEntity(guildId, content);
-            Repository.create(entity);
+            service.createEntity(guildId, content);
             event.getChannel().sendMessage("Pet adotado!").queue();
         }
 
         if (msg.startsWith(prefix + "Check"))
         {
             String content = msg.substring((prefix + "Check").length()).trim();
-            Entity entity = Repository.get(guildId);
+            Entity entity = service.getEntity(guildId);
 
             EmbedBuilder eb = new EmbedBuilder();
             eb.setTitle(entity.getName());
