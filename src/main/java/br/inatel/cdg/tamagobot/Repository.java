@@ -10,6 +10,6 @@ public final class Repository
 
     public static void create(Entity entity)
     {
-        entities.put(entity.getName(),entity);
+        entities.put(entity.getGuildId(),entity);
     }
 }

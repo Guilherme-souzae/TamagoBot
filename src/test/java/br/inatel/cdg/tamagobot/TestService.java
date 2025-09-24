@@ -9,7 +9,7 @@ public class TestService
     public void TestStringToEntitySucess()
     {
         String msg = "Eco-eco supremo https://localhost";
-        Entity entity = Service.createEntity(msg);
+        Entity entity = Service.createEntity("123", msg);
         assertEquals(entity.getName(),"Eco-eco supremo");
         assertEquals(entity.getImg_url(),"https://localhost");
     }

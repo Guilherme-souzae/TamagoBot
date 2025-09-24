@@ -17,9 +17,27 @@ public class Controller extends ListenerAdapter
         // Armazena a string da mensagem
         String msg = event.getMessage().getContentRaw();
 
-        // Mensagens
-        if (msg.startsWith(prefix))
+        // Armazena o ID do server
+        String guildId = event.getGuild().getId();
+
+        // Comandos
+
+        if (msg.startsWith(prefix + "Oi"))
         {
+            event.getChannel().sendMessage("Oi!").queue();
+        }
+
+        if (msg.startsWith(prefix + "Adopt"))
+        {
+            String content = msg.substring((prefix + "Adopt").length()).trim();
+            Entity entity = Service.createEntity(guildId, content);
+            Repository.create(entity);
+            event.getChannel().sendMessage("Pet adotado!").queue();
+        }
+
+        if (msg.startsWith(prefix + "Check"))
+        {
+            String content = msg.substring((prefix + "Check").length()).trim();
 
         }
     }

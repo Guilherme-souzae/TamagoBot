@@ -2,15 +2,22 @@ package br.inatel.cdg.tamagobot;
 
 public class Entity
 {
+    private String guildId;
     private String name;
     private String img_url;
     private int energy;
 
-    public Entity(String name, String img_url)
+    public Entity(String guildId, String name, String img_url)
     {
+        this.guildId = guildId;
         this.name = name;
         this.img_url = img_url;
         this.energy = 100;
+    }
+
+    public String getGuildId()
+    {
+        return guildId;
     }
 
     public String getName()
