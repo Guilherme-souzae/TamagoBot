@@ -12,4 +12,9 @@ public final class Service
 
         return new Entity(guildId, name, url);
     }
+
+    public static Entity getEntity(String guildId)
+    {
+        return Repository.get(guildId);
+    }
 }

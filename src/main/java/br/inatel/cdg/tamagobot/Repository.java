@@ -12,4 +12,9 @@ public final class Repository
     {
         entities.put(entity.getGuildId(),entity);
     }
+
+    public static Entity get(String guildId)
+    {
+        return entities.get(guildId);
+    }
 }

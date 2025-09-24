@@ -1,7 +1,11 @@
 package br.inatel.cdg.tamagobot;
 
+import com.sun.security.ntlm.Server;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
+import java.awt.*;
 
 public class Controller extends ListenerAdapter
 {
@@ -38,7 +42,13 @@ public class Controller extends ListenerAdapter
         if (msg.startsWith(prefix + "Check"))
         {
             String content = msg.substring((prefix + "Check").length()).trim();
+            Entity entity = Repository.get(guildId);
 
+            EmbedBuilder eb = new EmbedBuilder();
+            eb.setTitle(entity.getName());
+            eb.setImage(entity.getImg_url());
+            event.getChannel().sendMessageEmbeds(eb.build()).queue();
+            eb.clear();
         }
     }
 }
