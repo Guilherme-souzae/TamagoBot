@@ -11,6 +11,11 @@ public class Controller extends ListenerAdapter
     private final String prefix = "!";
     private Service service;
 
+    public Controller()
+    {
+        this.service = new Service();
+    }
+
     // Setter para injeção de dependência
     public void setService(Service service)
     {
@@ -22,7 +27,11 @@ public class Controller extends ListenerAdapter
     {
         // Ignora mensagens de bots
         System.out.println("Message received: " + event.getMessage().getContentRaw());
-        if (event.getAuthor().isBot()) return;
+        if (event.getAuthor().isBot())
+        {
+            System.out.println("Illegal author");
+            return;
+        }
 
         // Armazena a string da mensagem
         String msg = event.getMessage().getContentRaw();
@@ -32,28 +41,57 @@ public class Controller extends ListenerAdapter
 
         // Comandos
 
+        // Oi
         if (msg.startsWith(prefix + "Oi"))
         {
             event.getChannel().sendMessage("Oi!").queue();
         }
 
-        if (msg.startsWith(prefix + "Adopt"))
+        // Adopt
+        else if (msg.startsWith(prefix + "Adopt"))
         {
             String content = msg.substring((prefix + "Adopt").length()).trim();
-            service.createEntity(guildId, content);
-            event.getChannel().sendMessage("Pet adotado!").queue();
+            try
+            {
+                service.createEntity(guildId, content);
+                event.getChannel().sendMessage("Pet adotado!").queue();
+            }
+            catch (IllegalStateException | IllegalArgumentException e)
+            {
+                event.getChannel().sendMessage(e.getMessage()).queue();
+            }
         }
 
-        if (msg.startsWith(prefix + "Check"))
+        // Check
+        else if (msg.startsWith(prefix + "Check"))
         {
-            String content = msg.substring((prefix + "Check").length()).trim();
-            Entity entity = service.getEntity(guildId);
+            try
+            {
+                Entity entity = service.getEntity(guildId);
+                EmbedBuilder eb = new EmbedBuilder();
+                eb.setTitle(entity.getName());
+                eb.setImage(entity.getImg_url());
+                event.getChannel().sendMessageEmbeds(eb.build()).queue();
+                eb.clear();
+            }
+            catch (IllegalStateException e)
+            {
+                event.getChannel().sendMessage(e.getMessage()).queue();
+            }
+        }
 
-            EmbedBuilder eb = new EmbedBuilder();
-            eb.setTitle(entity.getName());
-            eb.setImage(entity.getImg_url());
-            event.getChannel().sendMessageEmbeds(eb.build()).queue();
-            eb.clear();
+        // Abandon
+        else if (msg.startsWith(prefix + "Abandon"))
+        {
+            try
+            {
+                service.deleteEntity(guildId);
+                event.getChannel().sendMessage("Pet abandonado, seu monstro!").queue();
+            }
+            catch (IllegalStateException e)
+            {
+                event.getChannel().sendMessage(e.getMessage()).queue();
+            }
         }
     }
 }

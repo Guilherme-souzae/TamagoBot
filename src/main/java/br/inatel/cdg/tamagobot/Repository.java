@@ -22,11 +22,23 @@ public class Repository
     {
         if (entities.get(guildId) == null)
         {
-            throw  new IllegalStateException("Entity already exists!");
+            throw  new IllegalStateException("Entity not exists!");
         }
         else
         {
             return entities.get(guildId);
+        }
+    }
+
+    public void delete(String guildId)
+    {
+        if (entities.get(guildId) == null)
+        {
+            throw new IllegalStateException("Entity not exists!");
+        }
+        else
+        {
+            entities.remove(guildId);
         }
     }
 }

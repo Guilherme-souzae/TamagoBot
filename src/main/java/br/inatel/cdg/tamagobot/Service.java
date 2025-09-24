@@ -4,6 +4,11 @@ public class Service
 {
     private Repository repo;
 
+    public Service()
+    {
+        this.repo = new Repository();
+    }
+
     public void setRepo(Repository repo)
     {
         this.repo = repo;
@@ -36,5 +41,10 @@ public class Service
     public Entity getEntity(String guildId) throws IllegalStateException
     {
         return repo.get(guildId);
+    }
+
+    public void deleteEntity(String guildId) throws IllegalStateException
+    {
+        repo.delete(guildId);
     }
 }
