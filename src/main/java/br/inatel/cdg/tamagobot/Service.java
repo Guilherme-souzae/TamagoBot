@@ -24,7 +24,7 @@ public class Service
         int index = msg.indexOf("https://");
         if (index == -1)
         {
-            throw new IllegalStateException("URL não encontrada na mensagem");
+            throw new IllegalArgumentException("URL não encontrada na mensagem");
         }
 
         String name = msg.substring(0, index).trim();
