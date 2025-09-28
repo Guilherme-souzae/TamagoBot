@@ -28,8 +28,6 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    needs: build
-
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
@@ -38,9 +36,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: Download artifact (jar)
-        uses: actions/download-artifact@v4
-        with:
-          name: app-jar
       - name: Run tests
-        run: mvn -B test --file pom.xml
+        run: mvn -B test surefire-report:report --file pom.xml
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: target/surefire-reports/
