@@ -30,6 +30,30 @@ public class Repository
         }
     }
 
+    public String getName(String guildId) throws IllegalStateException
+    {
+        if (entities.get(guildId) == null)
+        {
+            throw  new IllegalStateException("Entity not exists!");
+        }
+        else
+        {
+            return entities.get(guildId).getName();
+        }
+    }
+
+    public String getImgUrl(String guildId) throws IllegalStateException
+    {
+        if (entities.get(guildId) == null)
+        {
+            throw  new IllegalStateException("Entity not exists!");
+        }
+        else
+        {
+            return entities.get(guildId).getImg_url();
+        }
+    }
+
     public void updateName(String guildId, String newName)
     {
         if (entities.get(guildId) == null)

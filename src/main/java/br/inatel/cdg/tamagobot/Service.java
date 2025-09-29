@@ -43,6 +43,26 @@ public class Service
         return repo.get(guildId);
     }
 
+    public void renameEntity(String guildId, String msg) throws IllegalStateException, IllegalArgumentException
+    {
+        if (msg == null || msg.isEmpty())
+        {
+            throw new IllegalArgumentException("Mensagem vazia ou nula");
+        }
+
+        repo.updateName(guildId, msg);
+    }
+
+    public void changeImgUrl(String guildId, String msg) throws IllegalStateException, IllegalArgumentException
+    {
+        if (msg == null || msg.isEmpty())
+        {
+            throw new IllegalArgumentException("Mensagem vazia ou nula");
+        }
+
+        repo.updateUrl(guildId, msg);
+    }
+
     public void deleteEntity(String guildId) throws IllegalStateException
     {
         repo.delete(guildId);
