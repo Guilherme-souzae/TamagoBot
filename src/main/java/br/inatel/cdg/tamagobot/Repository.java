@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Repository
 {
-    private static final HashMap<String, Entity> entities = new HashMap<>();
+    private final HashMap<String, Entity> entities = new HashMap<>();
 
     public void create(Entity entity) throws IllegalStateException
     {
@@ -27,6 +27,30 @@ public class Repository
         else
         {
             return entities.get(guildId);
+        }
+    }
+
+    public void updateName(String guildId, String newName)
+    {
+        if (entities.get(guildId) == null)
+        {
+            throw  new IllegalStateException("Entity not exists!");
+        }
+        else
+        {
+            entities.get(guildId).setName(newName);
+        }
+    }
+
+    public void updateUrl(String guildId, String newUrl)
+    {
+        if (entities.get(guildId) == null)
+        {
+            throw  new IllegalStateException("Entity not exists!");
+        }
+        else
+        {
+            entities.get(guildId).setImg_url(newUrl);
         }
     }
 

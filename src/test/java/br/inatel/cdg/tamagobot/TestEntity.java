@@ -10,10 +10,10 @@ public class TestEntity
     public void TestEntityInstanceSucess()
     {
         Entity entity = new Entity("123", "Gravattack supremo", "https://");
-        assertEquals(entity.getGuildId(), "123");
-        assertEquals(entity.getName(), "Gravattack supremo");
-        assertEquals(entity.getImg_url(), "https://");
-        assertEquals(entity.getEnergy(), 100);
+        assertEquals("123", entity.getGuildId());
+        assertEquals("Gravattack supremo", entity.getName());
+        assertEquals("https://", entity.getImg_url());
+        assertEquals(100, entity.getEnergy());
     }
 
     @Test
@@ -23,9 +23,9 @@ public class TestEntity
         entity.setName("Fantasmatico");
         entity.setImg_url("https://teste");
         entity.setEnergy(50);
-        assertEquals(entity.getGuildId(), "123");
-        assertEquals(entity.getName(), "Fantasmatico");
-        assertEquals(entity.getImg_url(), "https://teste");
-        assertEquals(entity.getEnergy(), 50);
+        assertEquals("123", entity.getGuildId());
+        assertEquals("Fantasmatico", entity.getName());
+        assertEquals("https://teste", entity.getImg_url());
+        assertEquals(50, entity.getEnergy());
     }
 }
