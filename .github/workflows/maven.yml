@@ -43,3 +43,44 @@ jobs:
         with:
           name: test-report
           path: target/surefire-reports/
+
+  notificate:
+    runs-on: ubuntu-latest
+    needs: [ build, test ]
+    steps:
+      - name: Download jar
+        uses: actions/download-artifact@v4
+        with:
+          name: app-jar
+          path: artifacts/app
+
+      - name: Download test report
+        uses: actions/download-artifact@v4
+        with:
+          name: test-report
+          path: artifacts/report
+
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.MAIL_HOST }}
+          server_port: ${{ secrets.MAIL_PORT }}
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "Resultado do pipeline Java CI - ${{ github.repository }}"
+          to: ${{ secrets.MAIL_TO }}
+          from: "GitHub Actions <${{ secrets.MAIL_USERNAME }}>"
+          body: |
+            Olá,
+
+            O workflow **${{ github.workflow }}** terminou.
+
+            - Status do build: ${{ needs.build.result }}
+            - Status dos testes: ${{ needs.test.result }}
+
+            Relatório de testes em anexo.
+
+            --
+            GitHub Actions
+          attachments: |
+            artifacts/report/*.xml
