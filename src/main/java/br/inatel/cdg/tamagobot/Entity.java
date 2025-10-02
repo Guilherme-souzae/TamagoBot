@@ -86,7 +86,7 @@ public class Entity
 
     public void feed(int hunger)
     {
-        this.hunger = Math.min(hunger, 100);
+        this.hunger = Math.min(this.hunger + hunger, 100);
     }
 
     public void calculateEnergy()
