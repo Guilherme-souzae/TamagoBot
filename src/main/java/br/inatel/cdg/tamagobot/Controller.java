@@ -121,6 +121,34 @@ public class Controller extends ListenerAdapter
             }
         }
 
+        // Lullaby
+        else if (msg.startsWith(prefix + "Lullaby"))
+        {
+            try
+            {
+                Entity entity = service.getEntity(guildId);
+                entity.setSleeping(true);
+            }
+            catch (IllegalStateException e)
+            {
+                event.getChannel().sendMessage(e.getMessage()).queue();
+            }
+        }
+
+        // Disturb
+        else if (msg.startsWith(prefix + "Disturb"))
+        {
+            try
+            {
+                Entity entity = service.getEntity(guildId);
+                entity.setSleeping(false);
+            }
+            catch (IllegalStateException e)
+            {
+                event.getChannel().sendMessage(e.getMessage()).queue();
+            }
+        }
+        
         // Abandon
         else if (msg.startsWith(prefix + "Abandon"))
         {
