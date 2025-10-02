@@ -158,7 +158,7 @@ public class TestEntity
     }
 
     @Test
-    void normalizeHungerDown()
+    void testNormalizeHungerDown()
     {
         OffsetDateTime start = OffsetDateTime.of(2025, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
 

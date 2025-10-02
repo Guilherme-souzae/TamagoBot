@@ -8,12 +8,18 @@ import java.awt.*;
 
 public class Controller extends ListenerAdapter
 {
+    // Feature flags
+    public boolean playerRegisterFF = false;
+    public boolean playerBlackjackFF = false;
+
     private final String prefix = "!";
     private Service service;
+    private ServicePlayer servicePlayer;
 
     public Controller()
     {
         this.service = new Service();
+        this.servicePlayer = new ServicePlayer();
     }
 
     // Setter para injeção de dependência
@@ -38,6 +44,9 @@ public class Controller extends ListenerAdapter
 
         // Armazena o ID do server
         String guildId = event.getGuild().getId();
+
+        // Armazena o ID do autor
+        String userId = event.getAuthor().getId();
 
         // Comandos
 
@@ -176,6 +185,26 @@ public class Controller extends ListenerAdapter
             {
                 event.getChannel().sendMessage(e.getMessage()).queue();
             }
+        }
+
+        // Register
+        else if (msg.startsWith(prefix +  "Register") && playerRegisterFF)
+        {
+            try
+            {
+                servicePlayer.createEntityPlayer(userId);
+                event.getChannel().sendMessage("Usuário registrado com sucesso!").queue();
+            }
+            catch (IllegalStateException e)
+            {
+                event.getChannel().sendMessage(e.getMessage()).queue();
+            }
+        }
+
+        // Blackjack
+        else if (msg.startsWith(prefix + "Blackjack") && playerBlackjackFF)
+        {
+
         }
     }
 }
