@@ -1,5 +1,7 @@
 package br.inatel.cdg.tamagobot;
 
+import java.time.Clock;
+
 public class Service
 {
     private Repository repo;
@@ -35,7 +37,7 @@ public class Service
             throw new IllegalArgumentException("Nome ou URL estão vazios");
         }
 
-        repo.create(new Entity(guildId, name, url));
+        repo.create(new Entity(guildId, name, url, Clock.systemDefaultZone()));
     }
 
     public Entity getEntity(String guildId) throws IllegalStateException

@@ -1,17 +1,39 @@
 package br.inatel.cdg.tamagobot;
 
+import net.bytebuddy.asm.MemberSubstitution;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.Clock;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class TestEntity
 {
+    Entity entity;
+
+    @Mock
+    Clock clock;
+
+    @BeforeEach
+    public void setUp()
+    {
+        entity = new Entity("123", "Paciente Zero", "https://", clock);
+    }
+
     @Test
     public void TestEntityInstanceSucess()
     {
-        Entity entity = new Entity("123", "Gravattack supremo", "https://");
         assertEquals("123", entity.getGuildId());
-        assertEquals("Gravattack supremo", entity.getName());
+        assertEquals("Paciente Zero", entity.getName());
         assertEquals("https://", entity.getImg_url());
         assertEquals(100, entity.getEnergy());
     }
@@ -19,13 +41,71 @@ public class TestEntity
     @Test
     public void TestEntitySetterSucess()
     {
-        Entity entity = new Entity("123","Gravattack supremo", "https://");
-        entity.setName("Fantasmatico");
+        entity.setName("Paciente Um");
         entity.setImg_url("https://teste");
         entity.setEnergy(50);
         assertEquals("123", entity.getGuildId());
-        assertEquals("Fantasmatico", entity.getName());
+        assertEquals("Paciente Um", entity.getName());
         assertEquals("https://teste", entity.getImg_url());
         assertEquals(50, entity.getEnergy());
+    }
+
+    @Test
+    void testCalculateEnergyWhenSleeping()
+    {
+        OffsetDateTime start = OffsetDateTime.of(2025, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+
+        when(clock.instant()).thenReturn(start.toInstant());
+
+        entity.setSleeping(true);
+        entity.setDateTime(start);
+        entity.setEnergy(40);
+
+        OffsetDateTime later = start.plusMinutes(20);
+        when(clock.instant()).thenReturn(later.toInstant());
+        when(clock.getZone()).thenReturn(ZoneOffset.UTC);
+
+        entity.calculateEnergy();
+
+        assertEquals(42, entity.getEnergy());
+    }
+
+    @Test
+    void testCalculateEnergyWhenAwake()
+    {
+        OffsetDateTime start = OffsetDateTime.of(2025, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+
+        when(clock.instant()).thenReturn(start.toInstant());
+
+        entity.setSleeping(false);
+        entity.setDateTime(start);
+        entity.setEnergy(44);
+
+        OffsetDateTime later = start.plusMinutes(20);
+        when(clock.instant()).thenReturn(later.toInstant());
+        when(clock.getZone()).thenReturn(ZoneOffset.UTC);
+
+        entity.calculateEnergy();
+
+        assertEquals(42, entity.getEnergy());
+    }
+
+    @Test
+    void testCalculateHunger()
+    {
+        OffsetDateTime start = OffsetDateTime.of(2025, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+
+        when(clock.instant()).thenReturn(start.toInstant());
+
+        entity.setDateTime(start);
+        entity.setHunger(44);
+
+        OffsetDateTime later = start.plusMinutes(20);
+        when(clock.instant()).thenReturn(later.toInstant());
+        when(clock.getZone()).thenReturn(ZoneOffset.UTC);
+
+        entity.calculateHunger();
+
+        assertEquals(42, entity.getHunger());
     }
 }

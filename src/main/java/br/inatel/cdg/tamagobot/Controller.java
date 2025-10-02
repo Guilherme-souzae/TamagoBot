@@ -68,13 +68,54 @@ public class Controller extends ListenerAdapter
             try
             {
                 Entity entity = service.getEntity(guildId);
+                entity.calculateAll();
+
                 EmbedBuilder eb = new EmbedBuilder();
                 eb.setTitle(entity.getName());
                 eb.setImage(entity.getImg_url());
+
+                // supondo que os valores venham da sua entidade
+                int energia = entity.getEnergy();
+                int fome = entity.getHunger();
+
+                // coloca na descrição
+                eb.setDescription("Energia: " + energia + "\nFome: " + fome);
+
                 event.getChannel().sendMessageEmbeds(eb.build()).queue();
                 eb.clear();
+
             }
             catch (IllegalStateException e)
+            {
+                event.getChannel().sendMessage(e.getMessage()).queue();
+            }
+        }
+
+        // Rename
+        else if (msg.startsWith(prefix + "Rename"))
+        {
+            String content = msg.substring((prefix + "Rename").length()).trim();
+            try
+            {
+                service.renameEntity(guildId, content);
+                event.getChannel().sendMessage("Pet renomeado!").queue();
+            }
+            catch (IllegalStateException | IllegalArgumentException e)
+            {
+                event.getChannel().sendMessage(e.getMessage()).queue();
+            }
+        }
+
+        // Transform
+        else if (msg.startsWith(prefix + "Transform"))
+        {
+            String content = msg.substring((prefix + "Transform").length()).trim();
+            try
+            {
+                service.changeImgUrl(guildId, content);
+                event.getChannel().sendMessage("Pet transformado!").queue();
+            }
+            catch (IllegalStateException | IllegalArgumentException e)
             {
                 event.getChannel().sendMessage(e.getMessage()).queue();
             }

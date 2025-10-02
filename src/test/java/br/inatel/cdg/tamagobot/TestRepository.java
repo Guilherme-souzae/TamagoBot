@@ -3,6 +3,8 @@ package br.inatel.cdg.tamagobot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Clock;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestRepository
@@ -14,7 +16,7 @@ public class TestRepository
     public void setup()
     {
         repo = new Repository();
-        entity = new Entity("0", "Paciente Zero", "https://");
+        entity = new Entity("0", "Paciente Zero", "https://", Clock.systemDefaultZone());
     }
 
     @Test
@@ -27,7 +29,7 @@ public class TestRepository
     public void testCreateFailure()
     {
         repo.create(entity);
-        Entity entity1 = new Entity("0", "Paciente Um", "https://");
+        Entity entity1 = new Entity("0", "Paciente Um", "https://", Clock.systemDefaultZone());
         assertThrows(IllegalStateException.class, () -> repo.create(entity1));
     }
 
