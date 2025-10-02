@@ -108,4 +108,71 @@ public class TestEntity
 
         assertEquals(42, entity.getHunger());
     }
+
+    @Test
+    void testNormalizeEnergyUp()
+    {
+        OffsetDateTime start = OffsetDateTime.of(2025, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+
+        when(clock.instant()).thenReturn(start.toInstant());
+
+        entity.setSleeping(true);
+        entity.setDateTime(start);
+        entity.setEnergy(100);
+
+        OffsetDateTime later = start.plusMinutes(20);
+        when(clock.instant()).thenReturn(later.toInstant());
+        when(clock.getZone()).thenReturn(ZoneOffset.UTC);
+
+        entity.calculateEnergy();
+
+        assertEquals(100, entity.getEnergy());
+    }
+
+    @Test
+    void testNormalizeEnergyDown()
+    {
+        OffsetDateTime start = OffsetDateTime.of(2025, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+
+        when(clock.instant()).thenReturn(start.toInstant());
+
+        entity.setSleeping(false);
+        entity.setDateTime(start);
+        entity.setEnergy(0);
+
+        OffsetDateTime later = start.plusMinutes(20);
+        when(clock.instant()).thenReturn(later.toInstant());
+        when(clock.getZone()).thenReturn(ZoneOffset.UTC);
+
+        entity.calculateEnergy();
+
+        assertEquals(0, entity.getEnergy());
+    }
+
+    @Test
+    void testNormalizeHungerUp()
+    {
+        entity.setHunger(100);
+        entity.feed(1);
+        assertEquals(100, entity.getHunger());
+    }
+
+    @Test
+    void normalizeHungerDown()
+    {
+        OffsetDateTime start = OffsetDateTime.of(2025, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+
+        when(clock.instant()).thenReturn(start.toInstant());
+
+        entity.setDateTime(start);
+        entity.setHunger(0);
+
+        OffsetDateTime later = start.plusMinutes(20);
+        when(clock.instant()).thenReturn(later.toInstant());
+        when(clock.getZone()).thenReturn(ZoneOffset.UTC);
+
+        entity.calculateHunger();
+
+        assertEquals(0, entity.getHunger());
+    }
 }

@@ -148,7 +148,22 @@ public class Controller extends ListenerAdapter
                 event.getChannel().sendMessage(e.getMessage()).queue();
             }
         }
-        
+
+        // Feast
+        else if (msg.startsWith(prefix + "Feast"))
+        {
+            try
+            {
+                Entity entity = service.getEntity(guildId);
+                entity.setSleeping(false);
+                entity.feed(25);
+            }
+            catch (IllegalStateException e)
+            {
+                event.getChannel().sendMessage(e.getMessage()).queue();
+            }
+        }
+
         // Abandon
         else if (msg.startsWith(prefix + "Abandon"))
         {

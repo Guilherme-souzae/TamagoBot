@@ -27,6 +27,7 @@ public class Entity
         this.img_url = img_url;
         this.clock = clock;
         this.energy = 100;
+        this.hunger = 100;
         this.dateTime = OffsetDateTime.now();
         this.sleeping = false;
     }
@@ -83,6 +84,11 @@ public class Entity
         this.hunger = hunger;
     }
 
+    public void feed(int hunger)
+    {
+        this.hunger = Math.min(hunger, 100);
+    }
+
     public void calculateEnergy()
     {
         OffsetDateTime jetzt = OffsetDateTime.now(clock);
@@ -93,7 +99,7 @@ public class Entity
         if (change >= 1)
         {
             dateTime = jetzt;
-            energy += (sleeping) ? change : -change;
+            energy = (sleeping) ? Math.min(100, energy + change) : Math.max(0, energy - change);
         }
     }
 
@@ -107,7 +113,7 @@ public class Entity
         if (change >= 1)
         {
             dateTime = jetzt;
-            hunger -= change;
+            hunger = Math.max(0, hunger - change);
         }
     }
 
