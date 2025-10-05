@@ -1,19 +1,21 @@
-package br.inatel.cdg.tamagobot.commands;
+package br.inatel.cdg.tamagobot.commands.pet;
 
+import br.inatel.cdg.tamagobot.commands.BotCommand;
+import br.inatel.cdg.tamagobot.esr.ServiceFacade;
 import br.inatel.cdg.tamagobot.esr.pet.PetService;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class RenameCommand extends BotCommand
+public class AdoptCommand extends BotCommand
 {
-    public RenameCommand(PetService petService)
+    public AdoptCommand(ServiceFacade serviceFacade)
     {
-        super(petService);
+        super(serviceFacade);
     }
 
     @Override
     public String getName()
     {
-        return "Abandon";
+        return "Adopt";
     }
 
     @Override
@@ -22,11 +24,11 @@ public class RenameCommand extends BotCommand
         String msg = event.getMessage().getContentRaw();
         String guildId = event.getGuild().getId();
 
-        String content = msg.substring((prefix + "Rename").length()).trim();
+        String content = msg.substring((prefix + "Adopt").length()).trim();
         try
         {
-            petService.renameEntity(guildId, content);
-            event.getChannel().sendMessage("Pet renomeado!").queue();
+            serviceFacade.createPet(guildId, content);
+            event.getChannel().sendMessage("Pet adotado!").queue();
         }
         catch (IllegalStateException | IllegalArgumentException e)
         {

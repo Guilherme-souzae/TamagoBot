@@ -2,14 +2,17 @@ package br.inatel.cdg.tamagobot.esr;
 
 import br.inatel.cdg.tamagobot.esr.pet.PetService;
 import br.inatel.cdg.tamagobot.esr.pet.PetEntity;
+import br.inatel.cdg.tamagobot.esr.player.PlayerService;
 
 public class ServiceFacade {
 
     private final PetService petService;
+    private final PlayerService playerService;
 
-    public ServiceFacade(PetService petService)
+    public ServiceFacade(PetService petService, PlayerService playerService)
     {
         this.petService = petService;
+        this.playerService = playerService;
     }
 
     public void createPet(String guildId, String msg) throws IllegalStateException, IllegalArgumentException
@@ -35,5 +38,10 @@ public class ServiceFacade {
     public void deletePet(String guildId) throws IllegalStateException
     {
         petService.deleteEntity(guildId);
+    }
+
+    public void createPlayer(String userId)
+    {
+        playerService.createEntity(userId);
     }
 }

@@ -1,14 +1,16 @@
-package br.inatel.cdg.tamagobot.commands;
+package br.inatel.cdg.tamagobot.commands.pet;
 
+import br.inatel.cdg.tamagobot.commands.BotCommand;
+import br.inatel.cdg.tamagobot.esr.ServiceFacade;
 import br.inatel.cdg.tamagobot.esr.pet.PetEntity;
 import br.inatel.cdg.tamagobot.esr.pet.PetService;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class LullabyCommand extends BotCommand
+public class FeastCommand extends BotCommand
 {
-    public LullabyCommand(PetService petService)
+    public FeastCommand(ServiceFacade serviceFacade)
     {
-        super(petService);
+        super(serviceFacade);
     }
 
     @Override
@@ -25,8 +27,9 @@ public class LullabyCommand extends BotCommand
 
         try
         {
-            PetEntity petEntity = petService.getEntity(guildId);
-            petEntity.setSleeping(true);
+            PetEntity petEntity = serviceFacade.getPet(guildId);
+            petEntity.setSleeping(false);
+            petEntity.feed(25);
         }
         catch (IllegalStateException e)
         {

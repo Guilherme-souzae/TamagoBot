@@ -1,14 +1,15 @@
-package br.inatel.cdg.tamagobot.commands;
+package br.inatel.cdg.tamagobot.commands.pet;
 
-import br.inatel.cdg.tamagobot.esr.pet.PetEntity;
+import br.inatel.cdg.tamagobot.commands.BotCommand;
+import br.inatel.cdg.tamagobot.esr.ServiceFacade;
 import br.inatel.cdg.tamagobot.esr.pet.PetService;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class FeastCommand extends BotCommand
+public class AbandonCommand extends BotCommand
 {
-    public FeastCommand(PetService petService)
+    public AbandonCommand(ServiceFacade serviceFacade)
     {
-        super(petService);
+        super(serviceFacade);
     }
 
     @Override
@@ -25,9 +26,8 @@ public class FeastCommand extends BotCommand
 
         try
         {
-            PetEntity petEntity = petService.getEntity(guildId);
-            petEntity.setSleeping(false);
-            petEntity.feed(25);
+            serviceFacade.deletePet(guildId);
+            event.getChannel().sendMessage("Pet abandonado, seu monstro!").queue();
         }
         catch (IllegalStateException e)
         {

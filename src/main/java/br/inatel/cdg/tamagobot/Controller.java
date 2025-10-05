@@ -1,6 +1,7 @@
 package br.inatel.cdg.tamagobot;
 
 import br.inatel.cdg.tamagobot.commands.*;
+import br.inatel.cdg.tamagobot.commands.pet.*;
 import br.inatel.cdg.tamagobot.esr.ServiceFacade;
 import br.inatel.cdg.tamagobot.esr.pet.IPetRepository;
 import br.inatel.cdg.tamagobot.esr.pet.PetRepository;
@@ -21,10 +22,10 @@ public class Controller extends ListenerAdapter
         ServiceFacade serviceFacade = new ServiceFacade(petService);
 
         registry = new CommandRegistry();
-        registry.register(new PingCommand(petService));
-        registry.register(new AdoptCommand(petService));
-        registry.register(new CheckCommand(petService));
-        registry.register(new AbandonCommand(petService));
+        registry.register(new PingCommand(serviceFacade));
+        registry.register(new AdoptCommand(serviceFacade));
+        registry.register(new CheckCommand(serviceFacade));
+        registry.register(new AbandonCommand(serviceFacade));
     }
 
     @Override

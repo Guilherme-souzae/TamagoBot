@@ -1,13 +1,15 @@
-package br.inatel.cdg.tamagobot.commands;
+package br.inatel.cdg.tamagobot.commands.pet;
 
+import br.inatel.cdg.tamagobot.commands.BotCommand;
+import br.inatel.cdg.tamagobot.esr.ServiceFacade;
 import br.inatel.cdg.tamagobot.esr.pet.PetService;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class TransformCommand extends BotCommand
 {
-    public TransformCommand(PetService petService)
+    public TransformCommand(ServiceFacade serviceFacade)
     {
-        super(petService);
+        super(serviceFacade);
     }
 
     @Override
@@ -25,7 +27,7 @@ public class TransformCommand extends BotCommand
         String content = msg.substring((prefix + "Transform").length()).trim();
         try
         {
-            petService.changeImgUrl(guildId, content);
+            serviceFacade.changePetImgUrl(guildId, content);
             event.getChannel().sendMessage("Pet transformado!").queue();
         }
         catch (IllegalStateException | IllegalArgumentException e)
