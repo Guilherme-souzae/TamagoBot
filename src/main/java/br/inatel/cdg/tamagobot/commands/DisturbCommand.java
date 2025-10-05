@@ -1,14 +1,14 @@
 package br.inatel.cdg.tamagobot.commands;
 
-import br.inatel.cdg.tamagobot.esr.Entity;
-import br.inatel.cdg.tamagobot.esr.Service;
+import br.inatel.cdg.tamagobot.esr.pet.PetEntity;
+import br.inatel.cdg.tamagobot.esr.pet.PetService;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class DisturbCommand extends BotCommand
 {
-    public DisturbCommand(Service service)
+    public DisturbCommand(PetService petService)
     {
-        super(service);
+        super(petService);
     }
 
     @Override
@@ -25,8 +25,8 @@ public class DisturbCommand extends BotCommand
 
         try
         {
-            Entity entity = service.getEntity(guildId);
-            entity.setSleeping(false);
+            PetEntity petEntity = petService.getEntity(guildId);
+            petEntity.setSleeping(false);
         }
         catch (IllegalStateException e)
         {

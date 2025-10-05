@@ -1,12 +1,12 @@
-package br.inatel.cdg.tamagobot.esr;
+package br.inatel.cdg.tamagobot.esr.pet;
 
 import java.time.Clock;
 
-public class Service
+public class PetService
 {
-    private final IRepository repo;
+    private final IPetRepository repo;
 
-    public Service(IRepository repo)
+    public PetService(IPetRepository repo)
     {
         this.repo = repo;
     }
@@ -32,10 +32,10 @@ public class Service
             throw new IllegalArgumentException("Nome ou URL estão vazios");
         }
 
-        repo.create(new Entity(guildId, name, url, Clock.systemDefaultZone()));
+        repo.create(new PetEntity(guildId, name, url, Clock.systemDefaultZone()));
     }
 
-    public Entity getEntity(String guildId) throws IllegalStateException
+    public PetEntity getEntity(String guildId) throws IllegalStateException
     {
         return repo.get(guildId);
     }

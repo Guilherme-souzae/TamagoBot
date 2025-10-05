@@ -1,15 +1,15 @@
 package br.inatel.cdg.tamagobot.commands;
 
-import br.inatel.cdg.tamagobot.esr.Entity;
-import br.inatel.cdg.tamagobot.esr.Service;
+import br.inatel.cdg.tamagobot.esr.pet.PetEntity;
+import br.inatel.cdg.tamagobot.esr.pet.PetService;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class CheckCommand extends BotCommand
 {
-    public CheckCommand(Service service)
+    public CheckCommand(PetService petService)
     {
-        super(service);
+        super(petService);
     }
 
     @Override
@@ -26,15 +26,15 @@ public class CheckCommand extends BotCommand
 
         try
         {
-            Entity entity = service.getEntity(guildId);
-            entity.calculateAll();
+            PetEntity petEntity = petService.getEntity(guildId);
+            petEntity.calculateAll();
 
             EmbedBuilder eb = new EmbedBuilder();
-            eb.setTitle(entity.getName());
-            eb.setImage(entity.getImg_url());
+            eb.setTitle(petEntity.getName());
+            eb.setImage(petEntity.getImg_url());
 
-            int energia = entity.getEnergy();
-            int fome = entity.getHunger();
+            int energia = petEntity.getEnergy();
+            int fome = petEntity.getHunger();
 
             eb.setDescription("Energia: " + energia + "\nFome: " + fome);
 

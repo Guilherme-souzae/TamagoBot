@@ -1,26 +1,26 @@
-package br.inatel.cdg.tamagobot.esr;
+package br.inatel.cdg.tamagobot.esr.pet;
 
 import java.util.HashMap;
 
-public class Repository implements IRepository
+public class PetRepository implements IPetRepository
 {
-    private final HashMap<String, Entity> entities = new HashMap<>();
+    private final HashMap<String, PetEntity> entities = new HashMap<>();
 
     @Override
-    public void create(Entity entity) throws IllegalStateException
+    public void create(PetEntity petEntity) throws IllegalStateException
     {
-        if (entities.get(entity.getGuildId()) != null)
+        if (entities.get(petEntity.getGuildId()) != null)
         {
             throw  new IllegalStateException("Entity already exists!");
         }
         else
         {
-            entities.put(entity.getGuildId(),entity);
+            entities.put(petEntity.getGuildId(), petEntity);
         }
     }
 
     @Override
-    public Entity get(String guildId) throws IllegalStateException
+    public PetEntity get(String guildId) throws IllegalStateException
     {
         if (entities.get(guildId) == null)
         {

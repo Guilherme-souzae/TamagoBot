@@ -1,10 +1,10 @@
-package br.inatel.cdg.tamagobot.esr;
+package br.inatel.cdg.tamagobot.esr.pet;
 
 import java.time.Clock;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 
-public class Entity
+public class PetEntity
 {
     private String guildId;
     private String name;
@@ -20,7 +20,7 @@ public class Entity
     private OffsetDateTime dateTime;
     private Clock clock;
 
-    public Entity(String guildId, String name, String img_url, Clock clock)
+    public PetEntity(String guildId, String name, String img_url, Clock clock)
     {
         this.guildId = guildId;
         this.name = name;

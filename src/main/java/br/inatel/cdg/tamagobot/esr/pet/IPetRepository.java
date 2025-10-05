@@ -1,9 +1,9 @@
-package br.inatel.cdg.tamagobot.esr;
+package br.inatel.cdg.tamagobot.esr.pet;
 
-public interface IRepository
+public interface IPetRepository
 {
-    void create(Entity entity);
-    Entity get(String guildId);
+    void create(PetEntity petEntity);
+    PetEntity get(String guildId);
     String getName(String guildId);
     String getImgUrl(String guildId);
     void updateName(String guildId, String name);

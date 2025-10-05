@@ -1,13 +1,13 @@
 package br.inatel.cdg.tamagobot.commands;
 
-import br.inatel.cdg.tamagobot.esr.Service;
+import br.inatel.cdg.tamagobot.esr.pet.PetService;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class RenameCommand extends BotCommand
 {
-    public RenameCommand(Service service)
+    public RenameCommand(PetService petService)
     {
-        super(service);
+        super(petService);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class RenameCommand extends BotCommand
         String content = msg.substring((prefix + "Rename").length()).trim();
         try
         {
-            service.renameEntity(guildId, content);
+            petService.renameEntity(guildId, content);
             event.getChannel().sendMessage("Pet renomeado!").queue();
         }
         catch (IllegalStateException | IllegalArgumentException e)

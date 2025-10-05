@@ -1,13 +1,13 @@
 package br.inatel.cdg.tamagobot.commands;
 
-import br.inatel.cdg.tamagobot.esr.Service;
+import br.inatel.cdg.tamagobot.esr.pet.PetService;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class AbandonCommand extends BotCommand
 {
-    public AbandonCommand(Service service)
+    public AbandonCommand(PetService petService)
     {
-        super(service);
+        super(petService);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class AbandonCommand extends BotCommand
 
         try
         {
-            service.deleteEntity(guildId);
+            petService.deleteEntity(guildId);
             event.getChannel().sendMessage("Pet abandonado, seu monstro!").queue();
         }
         catch (IllegalStateException e)

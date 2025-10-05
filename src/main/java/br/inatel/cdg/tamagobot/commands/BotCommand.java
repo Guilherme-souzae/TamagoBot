@@ -1,15 +1,15 @@
 package br.inatel.cdg.tamagobot.commands;
 
-import br.inatel.cdg.tamagobot.esr.Service;
+import br.inatel.cdg.tamagobot.esr.pet.PetService;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 abstract public class BotCommand
 {
-    protected Service service;
+    protected PetService petService;
 
-    public BotCommand(Service service)
+    public BotCommand(PetService petService)
     {
-        this.service = service;
+        this.petService = petService;
     }
 
     public static final String prefix = "!";

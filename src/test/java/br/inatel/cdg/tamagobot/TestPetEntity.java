@@ -1,6 +1,6 @@
 package br.inatel.cdg.tamagobot;
 
-import br.inatel.cdg.tamagobot.esr.Entity;
+import br.inatel.cdg.tamagobot.esr.pet.PetEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class TestEntity
+public class TestPetEntity
 {
-    Entity entity;
+    PetEntity petEntity;
 
     @Mock
     Clock clock;
@@ -25,28 +25,28 @@ public class TestEntity
     @BeforeEach
     public void setUp()
     {
-        entity = new Entity("123", "Paciente Zero", "https://", clock);
+        petEntity = new PetEntity("123", "Paciente Zero", "https://", clock);
     }
 
     @Test
     public void TestEntityInstanceSucess()
     {
-        assertEquals("123", entity.getGuildId());
-        assertEquals("Paciente Zero", entity.getName());
-        assertEquals("https://", entity.getImg_url());
-        assertEquals(100, entity.getEnergy());
+        assertEquals("123", petEntity.getGuildId());
+        assertEquals("Paciente Zero", petEntity.getName());
+        assertEquals("https://", petEntity.getImg_url());
+        assertEquals(100, petEntity.getEnergy());
     }
 
     @Test
     public void TestEntitySetterSucess()
     {
-        entity.setName("Paciente Um");
-        entity.setImg_url("https://teste");
-        entity.setEnergy(50);
-        assertEquals("123", entity.getGuildId());
-        assertEquals("Paciente Um", entity.getName());
-        assertEquals("https://teste", entity.getImg_url());
-        assertEquals(50, entity.getEnergy());
+        petEntity.setName("Paciente Um");
+        petEntity.setImg_url("https://teste");
+        petEntity.setEnergy(50);
+        assertEquals("123", petEntity.getGuildId());
+        assertEquals("Paciente Um", petEntity.getName());
+        assertEquals("https://teste", petEntity.getImg_url());
+        assertEquals(50, petEntity.getEnergy());
     }
 
     @Test
@@ -56,17 +56,17 @@ public class TestEntity
 
         when(clock.instant()).thenReturn(start.toInstant());
 
-        entity.setSleeping(true);
-        entity.setDateTime(start);
-        entity.setEnergy(40);
+        petEntity.setSleeping(true);
+        petEntity.setDateTime(start);
+        petEntity.setEnergy(40);
 
         OffsetDateTime later = start.plusMinutes(20);
         when(clock.instant()).thenReturn(later.toInstant());
         when(clock.getZone()).thenReturn(ZoneOffset.UTC);
 
-        entity.calculateEnergy();
+        petEntity.calculateEnergy();
 
-        assertEquals(42, entity.getEnergy());
+        assertEquals(42, petEntity.getEnergy());
     }
 
     @Test
@@ -76,17 +76,17 @@ public class TestEntity
 
         when(clock.instant()).thenReturn(start.toInstant());
 
-        entity.setSleeping(false);
-        entity.setDateTime(start);
-        entity.setEnergy(44);
+        petEntity.setSleeping(false);
+        petEntity.setDateTime(start);
+        petEntity.setEnergy(44);
 
         OffsetDateTime later = start.plusMinutes(20);
         when(clock.instant()).thenReturn(later.toInstant());
         when(clock.getZone()).thenReturn(ZoneOffset.UTC);
 
-        entity.calculateEnergy();
+        petEntity.calculateEnergy();
 
-        assertEquals(42, entity.getEnergy());
+        assertEquals(42, petEntity.getEnergy());
     }
 
     @Test
@@ -96,16 +96,16 @@ public class TestEntity
 
         when(clock.instant()).thenReturn(start.toInstant());
 
-        entity.setDateTime(start);
-        entity.setHunger(44);
+        petEntity.setDateTime(start);
+        petEntity.setHunger(44);
 
         OffsetDateTime later = start.plusMinutes(20);
         when(clock.instant()).thenReturn(later.toInstant());
         when(clock.getZone()).thenReturn(ZoneOffset.UTC);
 
-        entity.calculateHunger();
+        petEntity.calculateHunger();
 
-        assertEquals(42, entity.getHunger());
+        assertEquals(42, petEntity.getHunger());
     }
 
     @Test
@@ -115,17 +115,17 @@ public class TestEntity
 
         when(clock.instant()).thenReturn(start.toInstant());
 
-        entity.setSleeping(true);
-        entity.setDateTime(start);
-        entity.setEnergy(100);
+        petEntity.setSleeping(true);
+        petEntity.setDateTime(start);
+        petEntity.setEnergy(100);
 
         OffsetDateTime later = start.plusMinutes(20);
         when(clock.instant()).thenReturn(later.toInstant());
         when(clock.getZone()).thenReturn(ZoneOffset.UTC);
 
-        entity.calculateEnergy();
+        petEntity.calculateEnergy();
 
-        assertEquals(100, entity.getEnergy());
+        assertEquals(100, petEntity.getEnergy());
     }
 
     @Test
@@ -135,25 +135,25 @@ public class TestEntity
 
         when(clock.instant()).thenReturn(start.toInstant());
 
-        entity.setSleeping(false);
-        entity.setDateTime(start);
-        entity.setEnergy(0);
+        petEntity.setSleeping(false);
+        petEntity.setDateTime(start);
+        petEntity.setEnergy(0);
 
         OffsetDateTime later = start.plusMinutes(20);
         when(clock.instant()).thenReturn(later.toInstant());
         when(clock.getZone()).thenReturn(ZoneOffset.UTC);
 
-        entity.calculateEnergy();
+        petEntity.calculateEnergy();
 
-        assertEquals(0, entity.getEnergy());
+        assertEquals(0, petEntity.getEnergy());
     }
 
     @Test
     void testNormalizeHungerUp()
     {
-        entity.setHunger(100);
-        entity.feed(1);
-        assertEquals(100, entity.getHunger());
+        petEntity.setHunger(100);
+        petEntity.feed(1);
+        assertEquals(100, petEntity.getHunger());
     }
 
     @Test
@@ -163,15 +163,15 @@ public class TestEntity
 
         when(clock.instant()).thenReturn(start.toInstant());
 
-        entity.setDateTime(start);
-        entity.setHunger(0);
+        petEntity.setDateTime(start);
+        petEntity.setHunger(0);
 
         OffsetDateTime later = start.plusMinutes(20);
         when(clock.instant()).thenReturn(later.toInstant());
         when(clock.getZone()).thenReturn(ZoneOffset.UTC);
 
-        entity.calculateHunger();
+        petEntity.calculateHunger();
 
-        assertEquals(0, entity.getHunger());
+        assertEquals(0, petEntity.getHunger());
     }
 }

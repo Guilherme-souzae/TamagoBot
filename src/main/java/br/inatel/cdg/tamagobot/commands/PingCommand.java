@@ -1,13 +1,13 @@
 package br.inatel.cdg.tamagobot.commands;
 
-import br.inatel.cdg.tamagobot.esr.Service;
+import br.inatel.cdg.tamagobot.esr.pet.PetService;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class PingCommand extends BotCommand
 {
-    public PingCommand(Service service)
+    public PingCommand(PetService petService)
     {
-        super(service);
+        super(petService);
     }
 
     public String getName()
