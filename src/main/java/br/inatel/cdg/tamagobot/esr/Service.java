@@ -4,14 +4,9 @@ import java.time.Clock;
 
 public class Service
 {
-    private Repository repo;
+    private final IRepository repo;
 
-    public Service()
-    {
-        this.repo = new Repository();
-    }
-
-    public void setRepo(Repository repo)
+    public Service(IRepository repo)
     {
         this.repo = repo;
     }

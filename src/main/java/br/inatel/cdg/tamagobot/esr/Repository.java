@@ -2,10 +2,11 @@ package br.inatel.cdg.tamagobot.esr;
 
 import java.util.HashMap;
 
-public class Repository
+public class Repository implements IRepository
 {
     private final HashMap<String, Entity> entities = new HashMap<>();
 
+    @Override
     public void create(Entity entity) throws IllegalStateException
     {
         if (entities.get(entity.getGuildId()) != null)
@@ -18,6 +19,7 @@ public class Repository
         }
     }
 
+    @Override
     public Entity get(String guildId) throws IllegalStateException
     {
         if (entities.get(guildId) == null)
@@ -30,6 +32,7 @@ public class Repository
         }
     }
 
+    @Override
     public String getName(String guildId) throws IllegalStateException
     {
         if (entities.get(guildId) == null)
@@ -42,6 +45,7 @@ public class Repository
         }
     }
 
+    @Override
     public String getImgUrl(String guildId) throws IllegalStateException
     {
         if (entities.get(guildId) == null)
@@ -54,6 +58,7 @@ public class Repository
         }
     }
 
+    @Override
     public void updateName(String guildId, String newName)
     {
         if (entities.get(guildId) == null)
@@ -66,6 +71,7 @@ public class Repository
         }
     }
 
+    @Override
     public void updateUrl(String guildId, String newUrl)
     {
         if (entities.get(guildId) == null)
@@ -78,6 +84,7 @@ public class Repository
         }
     }
 
+    @Override
     public void delete(String guildId)
     {
         if (entities.get(guildId) == null)

@@ -2,6 +2,7 @@ package br.inatel.cdg.tamagobot;
 
 import br.inatel.cdg.tamagobot.commands.*;
 import br.inatel.cdg.tamagobot.esr.Entity;
+import br.inatel.cdg.tamagobot.esr.Repository;
 import br.inatel.cdg.tamagobot.esr.Service;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -14,7 +15,7 @@ public class Controller extends ListenerAdapter
 
     public Controller()
     {
-        this.service = new Service();
+        this.service = new Service(new Repository());
         this.registry = new CommandRegistry();
 
         registry.register(new PingCommand(service));
