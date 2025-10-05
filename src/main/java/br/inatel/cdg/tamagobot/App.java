@@ -15,7 +15,7 @@ public class App
 
         JDABuilder.createDefault(token, GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
                 .addEventListeners(new Controller())
-                .setActivity(Activity.playing("Diga !oi"))
+                .setActivity(Activity.playing("Diga !Ping"))
                 .build();
     }
 }

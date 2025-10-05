@@ -1,5 +1,7 @@
 package br.inatel.cdg.tamagobot;
 
+import br.inatel.cdg.tamagobot.esr.Entity;
+import br.inatel.cdg.tamagobot.esr.Repository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

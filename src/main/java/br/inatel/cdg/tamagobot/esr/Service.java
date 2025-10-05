@@ -1,4 +1,4 @@
-package br.inatel.cdg.tamagobot;
+package br.inatel.cdg.tamagobot.esr;
 
 import java.time.Clock;
 
