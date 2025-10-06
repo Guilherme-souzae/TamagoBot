@@ -1,7 +1,6 @@
 package br.inatel.cdg.tamagobot.commands;
 
 import br.inatel.cdg.tamagobot.esr.ServiceFacade;
-import br.inatel.cdg.tamagobot.esr.pet.PetService;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 abstract public class BotCommand

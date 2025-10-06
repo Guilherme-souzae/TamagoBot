@@ -1,47 +1,38 @@
 package br.inatel.cdg.tamagobot.esr;
 
-import br.inatel.cdg.tamagobot.esr.pet.PetService;
 import br.inatel.cdg.tamagobot.esr.pet.PetEntity;
-import br.inatel.cdg.tamagobot.esr.player.PlayerService;
+import br.inatel.cdg.tamagobot.esr.pet.PetService;
+import br.inatel.cdg.tamagobot.exceptions.DatabaseStateException;
+import br.inatel.cdg.tamagobot.exceptions.IllegalStringException;
 
-public class ServiceFacade {
+public class ServiceFacade
+{
+    private PetService petService;
 
-    private final PetService petService;
-    private final PlayerService playerService;
+    public ServiceFacade(PetService petService) {this.petService = petService;}
 
-    public ServiceFacade(PetService petService, PlayerService playerService)
+    public void createPet(String id, String content) throws DatabaseStateException, IllegalStringException
     {
-        this.petService = petService;
-        this.playerService = playerService;
+        petService.create(id, content);
     }
 
-    public void createPet(String guildId, String msg) throws IllegalStateException, IllegalArgumentException
+    public PetEntity getPet(String id) throws DatabaseStateException
     {
-        petService.createEntity(guildId, msg);
+        return petService.get(id);
     }
 
-    public PetEntity getPet(String guildId) throws IllegalStateException
+    public void renamePet(String id, String name) throws DatabaseStateException
     {
-        return petService.getEntity(guildId);
+
     }
 
-    public void renamePet(String guildId, String msg) throws IllegalStateException, IllegalArgumentException
+    public void changePetImgUrl(String id, String url) throws DatabaseStateException
     {
-        petService.renameEntity(guildId, msg);
+
     }
 
-    public void changePetImgUrl(String guildId, String msg) throws IllegalStateException, IllegalArgumentException
+    public void deletePet(String id) throws DatabaseStateException
     {
-        petService.changeImgUrl(guildId, msg);
-    }
 
-    public void deletePet(String guildId) throws IllegalStateException
-    {
-        petService.deleteEntity(guildId);
-    }
-
-    public void createPlayer(String userId)
-    {
-        playerService.createEntity(userId);
     }
 }

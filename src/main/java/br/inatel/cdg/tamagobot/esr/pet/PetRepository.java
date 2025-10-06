@@ -1,99 +1,33 @@
 package br.inatel.cdg.tamagobot.esr.pet;
 
-import java.util.HashMap;
+import br.inatel.cdg.tamagobot.esr.Entity;
+import br.inatel.cdg.tamagobot.esr.Repository;
+import br.inatel.cdg.tamagobot.exceptions.DatabaseStateException;
 
-public class PetRepository implements IPetRepository
+public class PetRepository extends Repository
 {
-    private final HashMap<String, PetEntity> entities = new HashMap<>();
 
     @Override
-    public void create(PetEntity petEntity) throws IllegalStateException
+    public void create(Entity entity) throws DatabaseStateException
     {
-        if (entities.get(petEntity.getGuildId()) != null)
-        {
-            throw  new IllegalStateException("Entity already exists!");
-        }
-        else
-        {
-            entities.put(petEntity.getGuildId(), petEntity);
-        }
+
     }
 
     @Override
-    public PetEntity get(String guildId) throws IllegalStateException
+    public Entity get(String id) throws DatabaseStateException
     {
-        if (entities.get(guildId) == null)
-        {
-            throw  new IllegalStateException("Entity not exists!");
-        }
-        else
-        {
-            return entities.get(guildId);
-        }
+        return null;
     }
 
     @Override
-    public String getName(String guildId) throws IllegalStateException
+    public void update(Entity entity) throws DatabaseStateException
     {
-        if (entities.get(guildId) == null)
-        {
-            throw  new IllegalStateException("Entity not exists!");
-        }
-        else
-        {
-            return entities.get(guildId).getName();
-        }
+
     }
 
     @Override
-    public String getImgUrl(String guildId) throws IllegalStateException
+    public void delete(String id) throws DatabaseStateException
     {
-        if (entities.get(guildId) == null)
-        {
-            throw  new IllegalStateException("Entity not exists!");
-        }
-        else
-        {
-            return entities.get(guildId).getImg_url();
-        }
-    }
 
-    @Override
-    public void updateName(String guildId, String newName)
-    {
-        if (entities.get(guildId) == null)
-        {
-            throw  new IllegalStateException("Entity not exists!");
-        }
-        else
-        {
-            entities.get(guildId).setName(newName);
-        }
-    }
-
-    @Override
-    public void updateUrl(String guildId, String newUrl)
-    {
-        if (entities.get(guildId) == null)
-        {
-            throw  new IllegalStateException("Entity not exists!");
-        }
-        else
-        {
-            entities.get(guildId).setImg_url(newUrl);
-        }
-    }
-
-    @Override
-    public void delete(String guildId)
-    {
-        if (entities.get(guildId) == null)
-        {
-            throw new IllegalStateException("Entity not exists!");
-        }
-        else
-        {
-            entities.remove(guildId);
-        }
     }
 }
