@@ -2,7 +2,8 @@ package br.inatel.cdg.tamagobot.commands.pet;
 
 import br.inatel.cdg.tamagobot.commands.BotCommand;
 import br.inatel.cdg.tamagobot.esr.ServiceFacade;
-import br.inatel.cdg.tamagobot.esr.pet.PetService;
+import br.inatel.cdg.tamagobot.exceptions.DatabaseStateException;
+import br.inatel.cdg.tamagobot.exceptions.IllegalStringException;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class AdoptCommand extends BotCommand
@@ -30,7 +31,7 @@ public class AdoptCommand extends BotCommand
             serviceFacade.createPet(guildId, content);
             event.getChannel().sendMessage("Pet adotado!").queue();
         }
-        catch (IllegalStateException | IllegalArgumentException e)
+        catch (DatabaseStateException | IllegalStringException e)
         {
             event.getChannel().sendMessage(e.getMessage()).queue();
         }

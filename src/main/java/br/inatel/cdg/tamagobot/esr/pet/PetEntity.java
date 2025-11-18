@@ -1,12 +1,13 @@
 package br.inatel.cdg.tamagobot.esr.pet;
 
+import br.inatel.cdg.tamagobot.esr.Entity;
+
 import java.time.Clock;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 
-public class PetEntity
+public class PetEntity extends Entity
 {
-    private String guildId;
     private String name;
     private String img_url;
 
@@ -22,7 +23,8 @@ public class PetEntity
 
     public PetEntity(String guildId, String name, String img_url, Clock clock)
     {
-        this.guildId = guildId;
+        super(guildId);
+
         this.name = name;
         this.img_url = img_url;
         this.clock = clock;
@@ -30,11 +32,6 @@ public class PetEntity
         this.hunger = 100;
         this.dateTime = OffsetDateTime.now();
         this.sleeping = false;
-    }
-
-    public String getGuildId()
-    {
-        return guildId;
     }
 
     public String getName()

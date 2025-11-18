@@ -2,8 +2,8 @@ package br.inatel.cdg.tamagobot;
 
 import br.inatel.cdg.tamagobot.commands.*;
 import br.inatel.cdg.tamagobot.commands.pet.*;
+import br.inatel.cdg.tamagobot.esr.Repository;
 import br.inatel.cdg.tamagobot.esr.ServiceFacade;
-import br.inatel.cdg.tamagobot.esr.pet.IPetRepository;
 import br.inatel.cdg.tamagobot.esr.pet.PetRepository;
 import br.inatel.cdg.tamagobot.esr.pet.PetService;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -16,10 +16,10 @@ public class Controller extends ListenerAdapter
 
     public Controller()
     {
-        IPetRepository repo = new PetRepository();
-        PetService petService = new PetService(repo);
+        Repository petRepo = new PetRepository();
+        PetService petService = new PetService(petRepo);
 
-        ServiceFacade serviceFacade = new ServiceFacade(petService);
+        serviceFacade = new ServiceFacade(petService);
 
         registry = new CommandRegistry();
         registry.register(new PingCommand(serviceFacade));
@@ -33,9 +33,10 @@ public class Controller extends ListenerAdapter
     {
         String content = event.getMessage().getContentRaw();
 
-        if (!content.startsWith(BotCommand.prefix)) return;
-        String commandName = content.substring(1).split(" ")[0];
-
-        registry.execute(commandName, event);
+        if (content.startsWith(BotCommand.prefix))
+        {
+            String commandName = content.substring(1).split(" ")[0];
+            registry.execute(commandName, event);
+        }
     }
 }
