@@ -17,19 +17,5 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-
-        stage('Test') {
-            steps {
-                junit '**/target/surefire-reports/*.xml', allowEmptyResults: true
-            }
-        }
-
-        stage('Archive') {
-            steps {
-                script {
-                    archiveArtifacts artifacts: 'target/*.jar', fingerprint: true, allowEmptyArchive: true
-                }
-            }
-        }
     }
 }
