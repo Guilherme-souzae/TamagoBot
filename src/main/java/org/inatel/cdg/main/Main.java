@@ -1,4 +1,4 @@
-package org.inatel.cdg;
+package org.inatel.cdg.main;
 
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -16,6 +16,8 @@ public class Main
         manager.register(new AddoptCommand());
         manager.register(new CheckCommand());
 
-        JDABuilder.createDefault("TOKEN").enableIntents(GatewayIntent.MESSAGE_CONTENT).addEventListeners(new MessageListener(manager)).build();
+        String token = Config.INSTANCE.discordToken();
+
+        JDABuilder.createDefault(token).enableIntents(GatewayIntent.MESSAGE_CONTENT).addEventListeners(new MessageListener(manager)).build();
     }
 }

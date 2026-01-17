@@ -1,8 +1,8 @@
 package org.inatel.cdg.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import org.inatel.cdg.Command;
-import org.inatel.cdg.CommandContext;
+import org.inatel.cdg.main.Command;
+import org.inatel.cdg.main.CommandContext;
 import org.inatel.cdg.crud.PetEntity;
 import org.inatel.cdg.crud.PetService;
 
@@ -48,7 +48,7 @@ public class CheckCommand implements Command
         embed.addField("⚡ Energia", pet.getPetEnergy() + "/100", true);
         embed.addField(
                 "💤 Status",
-                pet.isSleeping() ? "Dormindo 😴" : "Acordado 😄",
+                pet.getSleeping() ? "Dormindo 😴" : "Acordado 😄",
                 true
         );
 

@@ -65,7 +65,7 @@ public class PetEntity
         return petEnergy;
     }
 
-    public boolean isSleeping()
+    public boolean getSleeping()
     {
         return sleeping;
     }

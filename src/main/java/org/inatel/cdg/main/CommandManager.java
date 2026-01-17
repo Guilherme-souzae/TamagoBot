@@ -1,4 +1,4 @@
-package org.inatel.cdg;
+package org.inatel.cdg.main;
 
 import java.util.HashMap;
 import java.util.Map;

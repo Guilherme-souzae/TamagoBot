@@ -1,4 +1,4 @@
-package org.inatel.cdg;
+package org.inatel.cdg.main;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

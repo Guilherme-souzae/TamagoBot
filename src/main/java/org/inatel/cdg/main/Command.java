@@ -1,4 +1,4 @@
-package org.inatel.cdg;
+package org.inatel.cdg.main;
 
 public interface Command
 {

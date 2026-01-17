@@ -6,7 +6,7 @@ public enum PetService
 {
     INSTANCE;
 
-    private static long energyRate = 1; // minutes
+    private final long energyRate = 1; // minutes
 
     public void CreatePet(String petId, String petName, String petUrl, long time)
     {
@@ -41,8 +41,12 @@ public enum PetService
     public void AgePet(String petId, long time)
     {
         PetEntity pet = PetRepository.INSTANCE.ReadPet(petId);
-        long deltaTime = (time - pet.getLastTime()) / 60000; // minutes
-        int deltaEnergy = round(deltaTime / energyRate);
-        pet.setPetEnergy(pet.getPetEnergy() - deltaEnergy);
+        long deltaTime = (time - pet.getLastTime()) / 1; // minutes
+        int deltaEnergy = (int) Math.round((double) deltaTime / energyRate);
+        deltaEnergy *= (pet.getSleeping() ? 1 : -1);
+        int newEnergy = pet.getPetEnergy() + deltaEnergy;
+        newEnergy = Math.max(0, Math.min(100, newEnergy));
+        pet.setPetEnergy(newEnergy);
+        PetRepository.INSTANCE.UpdatePet(pet);
     }
 }

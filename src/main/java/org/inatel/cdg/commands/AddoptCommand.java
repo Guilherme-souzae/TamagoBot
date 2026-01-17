@@ -1,7 +1,7 @@
 package org.inatel.cdg.commands;
 
-import org.inatel.cdg.Command;
-import org.inatel.cdg.CommandContext;
+import org.inatel.cdg.main.Command;
+import org.inatel.cdg.main.CommandContext;
 import org.inatel.cdg.crud.PetService;
 
 public class AddoptCommand implements Command
