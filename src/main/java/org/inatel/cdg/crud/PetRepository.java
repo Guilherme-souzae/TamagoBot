@@ -6,25 +6,30 @@ public enum PetRepository
 {
     INSTANCE;
 
-    private static HashMap<String,PetEntity> database = new HashMap<>();
+    private static I_PetDatabase database;
+
+    public void SetDatabase(I_PetDatabase database)
+    {
+        this.database = database;
+    }
 
     public static void CreatePet(PetEntity petEntity)
     {
-        database.put(petEntity.getPetId(), petEntity);
+        database.Create(petEntity);
     }
 
     public static PetEntity ReadPet(String petId)
     {
-        return database.get(petId);
+        return database.Read(petId);
     }
 
     public static void UpdatePet(PetEntity petEntity)
     {
-        database.put(petEntity.getPetId(), petEntity);
+        database.Update(petEntity);
     }
 
     public static void DeletePet(String petId)
     {
-        database.remove(petId);
+        database.Delete(petId);
     }
 }
