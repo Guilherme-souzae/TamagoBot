@@ -4,6 +4,7 @@ import org.inatel.cdg.main.Command;
 import org.inatel.cdg.main.CommandContext;
 import org.inatel.cdg.crud.PetEntity;
 import org.inatel.cdg.crud.PetService;
+import org.inatel.cdg.main.PetServiceFacade;
 
 public class LullabyCommand implements Command
 {
@@ -23,8 +24,8 @@ public class LullabyCommand implements Command
     public void execute(CommandContext ctx)
     {
         String guildId = ctx.getEvent().getGuild().getId();
-        PetEntity pet = PetService.INSTANCE.GetPet(guildId);
-        PetService.INSTANCE.SetSleep(pet, true);
+        PetEntity pet = PetServiceFacade.GetPetService().GetPet(guildId);
+        PetServiceFacade.GetPetService().SetSleep(pet, true);
         ctx.getEvent().getChannel().sendMessage("Pet is sleeping").queue();
     }
 }

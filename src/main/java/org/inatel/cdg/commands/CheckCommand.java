@@ -5,6 +5,7 @@ import org.inatel.cdg.main.Command;
 import org.inatel.cdg.main.CommandContext;
 import org.inatel.cdg.crud.PetEntity;
 import org.inatel.cdg.crud.PetService;
+import org.inatel.cdg.main.PetServiceFacade;
 
 import java.awt.*;
 
@@ -27,8 +28,8 @@ public class CheckCommand implements Command
     {
         String guildId = ctx.getEvent().getGuild().getId();
         long time = ctx.getEvent().getMessage().getTimeCreated().toInstant().toEpochMilli();
-        PetService.INSTANCE.AgePet(guildId, time);
-        PetEntity pet = PetService.INSTANCE.GetPet(guildId);
+        PetServiceFacade.GetPetService().AgePet(guildId, time);
+        PetEntity pet = PetServiceFacade.GetPetService().GetPet(guildId);
 
         EmbedBuilder embed = makeEmbed(ctx, pet);
 
