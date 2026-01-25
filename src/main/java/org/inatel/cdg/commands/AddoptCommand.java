@@ -29,7 +29,7 @@ public class AddoptCommand implements Command
         String petName = PetNameValidator.validate(rawName);
 
         long time = ctx.getEvent().getMessage().getTimeCreated().toInstant().toEpochMilli();
-        String petUrl = "https://tenor.com/view/oh-oh-sexy-vampire-radio-gosha-vampire-disko-warp-gif-16581364981000675682";
+        String petUrl = "";
         PetServiceFacade.GetPetService().CreatePet(guildId, petName, petUrl, time);
         ctx.getEvent().getChannel().sendMessage("Pet " + petName + " adotado com sucesso!").queue();
     }

@@ -6,6 +6,8 @@ public class PetEntity
     private String petUrl;
     private String petId;
     private int petEnergy;
+    private int petHunger;
+    private int petBalance;
     private boolean sleeping;
     private long fistTime;
     private long lastTime;
@@ -28,6 +30,16 @@ public class PetEntity
     public void setPetEnergy(int petEnergy)
     {
         this.petEnergy = petEnergy;
+    }
+
+    public void setPetHunger(int petHunger)
+    {
+        this.petHunger = petHunger;
+    }
+
+    public void setPetBalance(int petBalance)
+    {
+        this.petBalance = petBalance;
     }
 
     public void setSleeping(boolean sleeping)
@@ -63,6 +75,16 @@ public class PetEntity
     public int getPetEnergy()
     {
         return petEnergy;
+    }
+
+    public int getPetHunger()
+    {
+        return petHunger;
+    }
+
+    public int getPetBalance()
+    {
+        return petBalance;
     }
 
     public boolean getSleeping()
