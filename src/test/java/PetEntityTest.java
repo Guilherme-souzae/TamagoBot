@@ -10,7 +10,7 @@ public class PetEntityTest
     {
         PetEntity petEntity = new PetEntity();
 
-        String name = "Godzila";
+        String name = "Doraemon";
         String url = "placeholder";
         String id = "pet-123";
         int energy = 80;
