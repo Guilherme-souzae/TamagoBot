@@ -28,7 +28,7 @@ public class PetService
         petEntity.setSleeping(false);
         petEntity.setPetEnergy(100);
         petEntity.setPetHunger(100);
-        petEntity.setPetBalance(0);
+        petEntity.setPetBalance(10);
         petEntity.setFistTime(time);
         petEntity.setLastTime(time);
 

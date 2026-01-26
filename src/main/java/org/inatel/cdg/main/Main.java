@@ -21,6 +21,7 @@ public class Main
         manager.register(new CheckCommand());
         manager.register(new LullabyCommand());
         manager.register(new ShoutCommand());
+        manager.register(new TreatCommand());
 
         String token = Config.discordToken();
 

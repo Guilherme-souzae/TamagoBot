@@ -14,7 +14,7 @@ public class PingCommand implements Command
     @Override
     public String getDescription()
     {
-        return "Responde com Pong";
+        return "Just 4 tests";
     }
 
     @Override
