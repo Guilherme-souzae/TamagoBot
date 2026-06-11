@@ -49,7 +49,7 @@ class PetService:
         PetService._check_unexisting_pet(id)
 
         pet = PetRepository.get_pet(id)
-        return
+        return pet
 
     @classmethod
     def delete_pet_callback(cls, id):
@@ -82,13 +82,13 @@ class PetService:
         PetRepository.save_pet(pet)
 
     @classmethod
-    def _check_existing_pet(id):
+    def _check_existing_pet(cls, id):
         pet = PetRepository.get_pet(id)
-        if pet != None:
+        if pet is not None:
             raise AlreadyAddoptedPetError
-        
+
     @classmethod
-    def _check_unexisting_pet(id):
+    def _check_unexisting_pet(cls, id):
         pet = PetRepository.get_pet(id)
-        if pet == None:
+        if pet is None:
             raise UnregisteredPetError

@@ -8,6 +8,13 @@ from model.pet.pet_service import PetService
 from model.user.user_entity import User
 from model.user.user_service import UserService
 
+from exceptions import (
+    UnregisteredPetError,
+    AlreadyAddoptedPetError,
+    InsuficientMoneyError,
+    InvalidNameError,
+    InvalidUrlError,
+)
 from utils import gen_food
 
 load_dotenv()
@@ -42,7 +49,27 @@ async def on_message(ctx):
 
 @bot.event
 async def on_command_error(ctx, error):
-    pass
+    # Erros de uso do comando (argumento faltando, etc.)
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send(f"⚠️ Argumento obrigatório faltando: `{error.param.name}`.")
+    elif isinstance(error, commands.CommandNotFound):
+        await ctx.send("❓ Comando não encontrado.")
+    else:
+        # Repassa exceções de domínio que vieram embrulhadas pelo discord.py
+        cause = getattr(error, "original", error)
+        if isinstance(cause, UnregisteredPetError):
+            await ctx.send("🐾 Nenhum pet encontrado neste servidor. Use `!addopt` para adotar um!")
+        elif isinstance(cause, AlreadyAddoptedPetError):
+            await ctx.send("🐾 Este servidor já possui um pet. Use `!abandon` antes de adotar outro.")
+        elif isinstance(cause, InsuficientMoneyError):
+            await ctx.send("💸 Você não tem dinheiro suficiente para isso.")
+        elif isinstance(cause, InvalidNameError):
+            await ctx.send("✏️ Nome inválido. Use apenas letras, números e espaços (máx. 32 caracteres).")
+        elif isinstance(cause, InvalidUrlError):
+            await ctx.send("🔗 URL inválida. Envie um link de imagem do Discord (png, jpg, gif ou webp).")
+        else:
+            await ctx.send("❌ Ocorreu um erro inesperado. Tente novamente mais tarde.")
+            raise error  # Registra no console para depuração
 
 # --- COMANDOS ---
 
@@ -51,7 +78,7 @@ async def addopt(ctx, name, url):
     pet_id = ctx.guild.id
     pet_time = ctx.message.created_at
     PetService.create_pet(pet_id, pet_time, name, url)
-    await ctx.send("Pet adotado com sucesso")
+    await ctx.send("🐾 Pet adotado com sucesso!")
 
 @bot.command()
 async def check(ctx):
@@ -74,16 +101,19 @@ async def check(ctx):
 async def abandon(ctx):
     pet_id = ctx.guild.id
     PetService.delete_pet_callback(pet_id)
+    await ctx.send("💔 Pet abandonado.")
 
 @bot.command()
 async def lullaby(ctx):
     pet_id = ctx.guild.id
     PetService.set_sleeping(pet_id, True)
+    await ctx.send("😴 Seu pet está dormindo agora.")
 
 @bot.command()
 async def shout(ctx):
     pet_id = ctx.guild.id
     PetService.set_sleeping(pet_id, False)
+    await ctx.send("📢 Seu pet foi acordado!")
 
 @bot.command()
 async def status(ctx):
@@ -91,20 +121,26 @@ async def status(ctx):
     guild_id = ctx.guild.id
     user = UserService.get_user_callback(user_id, guild_id)
 
+    if user is None:
+        await ctx.send("⚠️ Você ainda não possui um perfil. Mande uma mensagem para criar um!")
+        return
+
     embed = discord.Embed(
         title=f"{ctx.author.name}",
         description=f"XP: {user.xp}",
         color=discord.Color.blue()
     )
-
-    embed.add_field(name="Dinheiro: ", value=f"{user.balance}", inline=True)
+    embed.add_field(name="Dinheiro:", value=f"{user.balance}", inline=True)
 
     await ctx.send(embed=embed)
 
 @bot.command()
 async def treat(ctx):
     food, rarity = gen_food()
-    await ctx.send(f"Generating a {rarity["rarity"]} {food["name"]}! Making {int(rarity["mult"] * food["value"])} points!")
+    await ctx.send(
+        f"🍽️ Gerando um(a) **{food['name']}** de raridade **{rarity['rarity']}**! "
+        f"Vale **{int(rarity['mult'] * food['value'])}** pontos!"
+    )
 
 
 bot.run(TOKEN)

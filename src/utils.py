@@ -9,8 +9,11 @@ DISCORD_IMAGE_REGEX = re.compile(
     re.IGNORECASE
 )
 
+PET_NAME_REGEX = r"^[a-zA-Z0-9_-]{1,20}$"
+
 def validate_name(name):
-    pass
+    if re.match(PET_NAME_REGEX, name) == False:
+        raise InvalidNameError
 
 def validate_image_url(url):
      if bool(DISCORD_IMAGE_REGEX.match(url)) == False:
@@ -53,71 +56,63 @@ def gen_food():
     foods = (
         {
             "name": "apple",
-            "value": 30
+            "value": 5
         },
         {
             "name": "banana",
-            "value": 35
+            "value": 5
         },
         {
             "name": "orange",
-            "value": 40
+            "value": 10
         },
         {
             "name": "grape",
-            "value": 45
+            "value": 1
         },
         {
             "name": "watermelon",
-            "value": 50
+            "value": 15
         },
         {
             "name": "strawberry",
-            "value": 55
+            "value": 3
         },
         {
             "name": "bread",
-            "value": 60
+            "value": 10
         },
         {
             "name": "cheese",
-            "value": 75
+            "value": 20
         },
         {
             "name": "hamburger",
-            "value": 100
+            "value": 25
         },
         {
             "name": "pizza",
-            "value": 120
+            "value": 30
         },
         {
             "name": "sushi",
-            "value": 140
+            "value": 25
         },
         {
             "name": "steak",
-            "value": 160
+            "value": 25
         },
         {
             "name": "cake",
-            "value": 180
+            "value": 30
         },
         {
-            "name": "golden apple",
-            "value": 250
+            "name": "enchanted golden apple",
+            "value": 100
         },
         {
-            "name": "dragon fruit",
-            "value": 300
-        },
-        {
-            "name": "phoenix meat",
-            "value": 500
-        },
-        {
-            "name": "celestial pudding",
-            "value": 1000
+            "name": "ultimeatum",
+            "value": 100
         }
     )
 
