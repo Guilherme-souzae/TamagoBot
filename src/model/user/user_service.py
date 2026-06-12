@@ -20,3 +20,13 @@ class UserService:
     @classmethod
     def get_user_callback(cls, user_id, guild_id):
         return UserRepository.get_user(user_id, guild_id)
+    
+    @classmethod
+    def increase_xp(cls, user_id, guild_id, value):
+        user = UserRepository.get_user(user_id, guild_id)
+
+        if user is None:
+            user = User(user_id, guild_id)
+
+        user.xp += value
+        UserRepository.save_user(user)

@@ -82,6 +82,29 @@ class PetService:
         PetRepository.save_pet(pet)
 
     @classmethod
+    def give_food(cls, id, value):
+        PetService._check_unexisting_pet(id)
+
+        pet = PetRepository.get_pet(id)
+        original_hunger= pet.hunger
+        total_hunger = original_hunger + value
+
+        xp = 0
+        if total_hunger > 100:
+            efective_hunger = 100 - original_hunger
+            bonus_hunger = value - efective_hunger
+            xp = efective_hunger
+            xp *= 2
+            xp += bonus_hunger
+        else:
+            efective_hunger = value
+            xp = efective_hunger
+            xp *= 2
+
+        PetService.increase_energy(id, efective_hunger)
+        return xp
+
+    @classmethod
     def _check_existing_pet(cls, id):
         pet = PetRepository.get_pet(id)
         if pet is not None:

@@ -12,3 +12,6 @@ class InvalidNameError(Exception):
 
 class InvalidUrlError(Exception):
     pass
+
+class InsuficientMoneyError(Exception):
+    pass
