@@ -12,12 +12,12 @@ DISCORD_IMAGE_REGEX = re.compile(
 PET_NAME_REGEX = r"^[a-zA-Z0-9_-]{1,20}$"
 
 def validate_name(name):
-    if re.match(PET_NAME_REGEX, name) == False:
+    if not re.match(PET_NAME_REGEX, name):
         raise InvalidNameError
 
 def validate_image_url(url):
-     if bool(DISCORD_IMAGE_REGEX.match(url)) == False:
-         raise InvalidUrlError
+    if not DISCORD_IMAGE_REGEX.match(url):
+        raise InvalidUrlError
 
 def gen_food():
     rarities = (
