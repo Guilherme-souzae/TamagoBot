@@ -6,7 +6,7 @@ import pytest
 from unittest.mock import patch
 from exceptions import InvalidUrlError
 from utils import validate_image_url, validate_name, gen_food
-
+from exceptions import InvalidUrlError, InvalidNameError
 
 # ──────────────────────────────────────────────
 # validate_image_url
@@ -61,18 +61,17 @@ class TestValidateImageUrl:
 # ──────────────────────────────────────────────
 
 class TestValidateName:
-    def test_valid_simple_name_does_not_raise(self):
-        validate_name("Rex")
+    def test_name_with_space_raises(self):
+        with pytest.raises(InvalidNameError):
+            validate_name("Big Dog")
 
-    def test_valid_name_with_spaces_does_not_raise(self):
-        validate_name("Big Dog")
+    def test_empty_name_raises(self):
+        with pytest.raises(InvalidNameError):
+            validate_name("")
 
-    def test_empty_name_does_not_raise_yet(self):
-        # comportamento atual: não implementado, não levanta
-        validate_name("")
-
-    def test_long_name_does_not_raise_yet(self):
-        validate_name("x" * 200)
+    def test_long_name_raises(self):
+        with pytest.raises(InvalidNameError):
+            validate_name("x" * 21)
 
 
 # ──────────────────────────────────────────────
@@ -84,7 +83,7 @@ class TestGenFood:
     VALID_FOODS = {
         "apple", "banana", "orange", "grape", "watermelon", "strawberry",
         "bread", "cheese", "hamburger", "pizza", "sushi", "steak", "cake",
-        "golden apple", "dragon fruit", "phoenix meat", "celestial pudding",
+        "enchanted golden apple", "ultimeatum",
     }
 
     def test_returns_tuple_of_two(self):
