@@ -101,7 +101,7 @@ class PetService:
             xp = efective_hunger
             xp *= 2
 
-        PetService.increase_energy(id, efective_hunger)
+        PetService.increase_hunger(id, efective_hunger)
         return xp
 
     @classmethod

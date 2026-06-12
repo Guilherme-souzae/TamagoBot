@@ -138,21 +138,22 @@ async def status(ctx):
 async def treat(ctx):
     user_id = ctx.author.id
     guild_id = ctx.guild.id
-    pet = PetService.get_pet_callback(guild_id)
     user = UserService.get_user_callback(user_id, guild_id)
 
-    if user.balance >= 10 and pet != None:
-        UserService.increase_wealth(user_id, guild_id, -10)
-        food, rarity = gen_food()
-        raw_xp = int(rarity["mult"] * food["value"])
-        await ctx.send(
-            f"🍽️ Gerando um(a) **{food['name']}** de raridade **{rarity['rarity']}**! "
-            f"Vale **{int(rarity['mult'] * food['value'])}** pontos!"
-        )
-        xp = PetService.give_food(guild_id, raw_xp)
-        UserService.increase_xp(xp)
-    elif pet != None:
-        await ctx.send("⚠️ Dinheiro insuficiente! Acumule 10 moedas para comprar comida.") 
+    if user is None or user.balance < 10:
+        await ctx.send("⚠️ Dinheiro insuficiente! Acumule 10 moedas para comprar comida.")
+        return
+
+    pet = PetService.get_pet_callback(guild_id)
+    UserService.increase_wealth(user_id, guild_id, -10)
+    food, rarity = gen_food()
+    raw_xp = int(rarity["mult"] * food["value"])
+    await ctx.send(
+        f"🍽️ Gerando um(a) **{food['name']}** de raridade **{rarity['rarity']}**! "
+        f"Vale **{raw_xp}** pontos!"
+    )
+    xp = PetService.give_food(guild_id, raw_xp)
+    UserService.increase_xp(user_id, guild_id, xp)
 
 
 bot.run(TOKEN)
