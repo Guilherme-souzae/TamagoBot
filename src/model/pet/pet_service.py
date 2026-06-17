@@ -19,6 +19,7 @@ class PetService:
 
         dhunger = 10  # minutes to change hunger
         denergy = 20  # minutes to change energy
+        omeostasis_treshold = 30
 
         pet = PetRepository.get_pet(id)
 
@@ -41,6 +42,9 @@ class PetService:
         pet.hunger = int(max(0, min(pet.hunger, 100)))
         pet.energy = int(max(0, min(pet.energy, 100)))
         pet.time = time
+
+        if pet.hunger < omeostasis_treshold or pet.energy < omeostasis_treshold:
+            pet.omeostasis = False
 
         PetRepository.save_pet(pet)
 
